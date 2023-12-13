@@ -32,6 +32,7 @@ else
                     <td width="10%">@employee.Address</td>
                     <td width="5%">@employee.JoiningDate</td>
                 </tr>
+                <button @onclick="(() => EditEmployee(employee.Id))" class="btn btn-primary">Edit</button>
             }
         </tbody>
     </table>    
@@ -48,8 +49,14 @@ else
             employees = result;    
         }
     }
+
     public void AddEmployee()
     {
         NavigationManager.NavigateTo("/employee");
+    }
+
+    public void EditEmployee(int id)
+    {
+        NavigationManager.NavigateTo($"/employee/{id}");
     }
 }
