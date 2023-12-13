@@ -1,6 +1,8 @@
-﻿using blazor_wasm_sql_db.Client.Shared;
+﻿using blazor_was_sql_db.Server.Data;
+using blazor_wasm_sql_db.Client.Shared;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace blazor_wasm_sql_db.Server.Controllers
 {
@@ -8,21 +10,17 @@ namespace blazor_wasm_sql_db.Server.Controllers
     [ApiController]
     public class EmployeeController : ControllerBase
     {
+        private readonly DataContext _context;
+
+        public EmployeeController(DataContext context)
+        {
+            _context = context;
+        }
+
+        [HttpGet]
         public async Task<ActionResult<List<Employee>>> GetAllEmployees()
         {
-            var list = new List<Employee>
-            { 
-                new Employee
-                {
-                    Id = 1,
-                    Code = "HR1",
-                    FullName = "Joe Bloggs",
-                    Address = "123 New Street",
-                    JoiningDate = new DateTime(2023, 12, 13)
-                }
-            };
-
-            return Ok(list);
+            return Ok(await _context.Employees.ToListAsync());
         }
     }
 }
