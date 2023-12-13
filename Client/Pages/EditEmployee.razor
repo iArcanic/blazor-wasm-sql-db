@@ -1,0 +1,49 @@
+﻿@page "/employee"
+@page "/employee/{id:int}"
+
+@if (Id is null)
+{
+    <PageTitle>Add a New Employee</PageTitle>
+    <h3>Add a New Employee</h3>
+}
+else
+{
+    <PageTitle> Edit @employee.Id</PageTitle>
+    <h3>Edit @employee.Id</h3>
+}
+
+<EditForm Model="employee" OnSubmit="HandleSubmit">
+    <div>
+        <label for="Id">Id</label>
+        <InputNumber id="Id" @bind-Value="@employee.Id" class="form-control"/>
+    </div>
+    <div>
+        <label for="Id">Code</label>
+        <InputText id="Code" @bind-Value="@employee.Code" class="form-control" />
+    </div>
+    <div>
+        <label for="Id">Full Name</label>
+        <InputText id="FullName" @bind-Value="@employee.FullName" class="form-control" />
+    </div>
+    <div>
+        <label for="Id">Address</label>
+        <InputText id="Address" @bind-Value="@employee.Address" class="form-control" />
+    </div>
+    <div>
+        <label for="Id">Joining Date</label>
+        <InputDate id="JoiningDate" @bind-Value="@employee.JoiningDate" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+</EditForm>
+
+@code {
+    [Parameter]
+    public int? Id { get; set; }
+
+    Employee employee = new Employee();
+
+    async Task HandleSubmit()
+    {
+        Console.WriteLine("Handle Submit!");
+    }
+}
