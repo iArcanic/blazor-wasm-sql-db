@@ -1,5 +1,6 @@
 ﻿@page "/employee"
 @page "/employee/{id:int}"
+@inject HttpClient Http
 
 @if (Id is null)
 {
@@ -44,6 +45,13 @@ else
 
     async Task HandleSubmit()
     {
-        Console.WriteLine("Handle Submit!");
+        if (Id is null)
+        {
+            await Http.PostAsJsonAsync("api/employee", employee);
+        }
+        else
+        {
+            await Http.PutAsJsonAsync($"/api/employee/{Id}", employee);    
+        }
     }
 }

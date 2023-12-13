@@ -22,5 +22,14 @@ namespace blazor_wasm_sql_db.Server.Controllers
         {
             return Ok(await _context.Employees.ToListAsync());
         }
+
+        [HttpPost]
+        public async Task<ActionResult<List<Employee>>> AddEmployees(Employee employee)
+        {
+            _context.Employees.Add(employee);
+            await _context.SaveChangesAsync();
+
+            return await GetAllEmployees();
+        }
     }
 }
