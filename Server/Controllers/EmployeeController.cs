@@ -66,5 +66,21 @@ namespace blazor_wasm_sql_db.Server.Controllers
 
             return await GetAllEmployees();
         }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<List<Employee>>> DeleteEmployees(int id)
+        { 
+            var dbEmployee = await _context.Employees.FindAsync(id);
+
+            if (dbEmployee == null)
+            { 
+                return NotFound("This Employee does not exist!");
+            }
+
+            _context.Employees.Remove(dbEmployee);
+            await _context.SaveChangesAsync();
+
+            return await GetAllEmployees();
+        }
     }
 }
