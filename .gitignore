@@ -1,0 +1,41 @@
+# .gitignore
+
+# Build output
+bin/
+obj/
+
+# NuGet packages
+packages/
+*.nupkg
+
+# Visual Studio Files
+.vs/
+
+# User-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Client-side deps
+node_modules/
+bower_components/
+
+# Client-side generated files 
+wwwroot/dist/
+
+# Log files
+npm-debug.log*
+
+# Test results
+testResults/
+
+# Caches
+*.tsbuildinfo
+
+# Optional extensibility cache directory used by Visual Studio 
+.vs/
+
+# Blazor WebAssembly files
+*wasm/
+*pdb
