@@ -1,6 +1,7 @@
 ﻿@page "/employee"
 @page "/employee/{id:int}"
 @inject HttpClient Http
+@inject NavigationManager NavigationManager
 
 @if (Id is null)
 {
@@ -43,6 +44,19 @@ else
 
     Employee employee = new Employee();
 
+    protected override async Task OnParametersSetAsync()
+    {
+        if (Id is not null)
+        {
+            var result = await Http.GetFromJsonAsync<Employee>($"api/employee/{Id}");
+
+            if (result is not null)
+            {
+                employee = result;    
+            }
+        }
+    }
+
     async Task HandleSubmit()
     {
         if (Id is null)
@@ -53,5 +67,7 @@ else
         {
             await Http.PutAsJsonAsync($"/api/employee/{Id}", employee);    
         }
+
+        NavigationManager.NavigateTo("/employees");
     }
 }
