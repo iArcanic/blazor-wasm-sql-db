@@ -1,10 +1,12 @@
 ﻿@page "/employees"
 @using blazor_wasm_sql_db.Shared
 @inject HttpClient Http
+@inject NavigationManager NavigationManager
 
 <h3>Employees</h3>
+<button @onclick="AddEmployee" class="btn btn-primary">Add Employee</button>
 
-@if (employees.Count <= 0)
+@if (employees is null)
 {
     <span>Loading Employees...</span>
 }
@@ -36,7 +38,7 @@ else
 }
 
 @code {
-    List<Employee> employees = new List<Employee>();
+    List<Employee>? employees;
 
     protected override async Task OnInitializedAsync()
     {
@@ -45,5 +47,9 @@ else
         {
             employees = result;    
         }
+    }
+    public void AddEmployee()
+    {
+        NavigationManager.NavigateTo("/employee");
     }
 }
