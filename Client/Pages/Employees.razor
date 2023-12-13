@@ -1,7 +1,49 @@
 ﻿@page "/employees"
+@using blazor_wasm_sql_db.Shared
+@inject HttpClient Http
 
 <h3>Employees</h3>
 
-@code {
+@if (employees.Count <= 0)
+{
+    <span>Loading Employees...</span>
+}
+else
+{
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Code</th>
+                <th>Full Name</th>
+                <th>Address</th>
+                <th>Joining Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var employee in employees)
+            {
+                <tr>
+                    <td width="5%">@employee.Id</td>
+                    <td width="5%">@employee.Code</td>
+                    <td width="10%">@employee.FullName</td>
+                    <td width="10%">@employee.Address</td>
+                    <td width="5%">@employee.JoiningDate</td>
+                </tr>
+            }
+        </tbody>
+    </table>    
+}
 
+@code {
+    List<Employee> employees = new List<Employee>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var result = await Http.GetFromJsonAsync<List<Employee>>("/api/employee");
+        if (result != null)
+        {
+            employees = result;    
+        }
+    }
 }
